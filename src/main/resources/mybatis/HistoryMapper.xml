@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shareexchange.mapper.HistoryMapper" >
+  <resultMap id="BaseResultMap" type="com.shareexchange.model.History" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="operate_id" property="operateId" jdbcType="BIGINT" />
+    <result column="operate_role" property="operateRole" jdbcType="TINYINT" />
+    <result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
+    <result column="goods_role" property="goodsRole" jdbcType="TINYINT" />
+    <result column="share_status" property="shareStatus" jdbcType="TINYINT" />
+    <result column="exchange_status" property="exchangeStatus" jdbcType="TINYINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, operate_id, operate_role, goods_id, goods_role, share_status, exchange_status, 
+    create_time, update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.shareexchange.model.HistoryExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from history
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from history
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from history
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.shareexchange.model.HistoryExample" >
+    delete from history
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.shareexchange.model.History" >
+    insert into history (id, operate_id, operate_role, 
+      goods_id, goods_role, share_status, 
+      exchange_status, create_time, update_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{operateId,jdbcType=BIGINT}, #{operateRole,jdbcType=TINYINT}, 
+      #{goodsId,jdbcType=VARCHAR}, #{goodsRole,jdbcType=TINYINT}, #{shareStatus,jdbcType=TINYINT}, 
+      #{exchangeStatus,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.shareexchange.model.History" >
+    insert into history
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="operateId != null" >
+        operate_id,
+      </if>
+      <if test="operateRole != null" >
+        operate_role,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="goodsRole != null" >
+        goods_role,
+      </if>
+      <if test="shareStatus != null" >
+        share_status,
+      </if>
+      <if test="exchangeStatus != null" >
+        exchange_status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="operateId != null" >
+        #{operateId,jdbcType=BIGINT},
+      </if>
+      <if test="operateRole != null" >
+        #{operateRole,jdbcType=TINYINT},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsRole != null" >
+        #{goodsRole,jdbcType=TINYINT},
+      </if>
+      <if test="shareStatus != null" >
+        #{shareStatus,jdbcType=TINYINT},
+      </if>
+      <if test="exchangeStatus != null" >
+        #{exchangeStatus,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.shareexchange.model.HistoryExample" resultType="java.lang.Integer" >
+    select count(*) from history
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update history
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.operateId != null" >
+        operate_id = #{record.operateId,jdbcType=BIGINT},
+      </if>
+      <if test="record.operateRole != null" >
+        operate_role = #{record.operateRole,jdbcType=TINYINT},
+      </if>
+      <if test="record.goodsId != null" >
+        goods_id = #{record.goodsId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsRole != null" >
+        goods_role = #{record.goodsRole,jdbcType=TINYINT},
+      </if>
+      <if test="record.shareStatus != null" >
+        share_status = #{record.shareStatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.exchangeStatus != null" >
+        exchange_status = #{record.exchangeStatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update history
+    set id = #{record.id,jdbcType=BIGINT},
+      operate_id = #{record.operateId,jdbcType=BIGINT},
+      operate_role = #{record.operateRole,jdbcType=TINYINT},
+      goods_id = #{record.goodsId,jdbcType=VARCHAR},
+      goods_role = #{record.goodsRole,jdbcType=TINYINT},
+      share_status = #{record.shareStatus,jdbcType=TINYINT},
+      exchange_status = #{record.exchangeStatus,jdbcType=TINYINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shareexchange.model.History" >
+    update history
+    <set >
+      <if test="operateId != null" >
+        operate_id = #{operateId,jdbcType=BIGINT},
+      </if>
+      <if test="operateRole != null" >
+        operate_role = #{operateRole,jdbcType=TINYINT},
+      </if>
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsRole != null" >
+        goods_role = #{goodsRole,jdbcType=TINYINT},
+      </if>
+      <if test="shareStatus != null" >
+        share_status = #{shareStatus,jdbcType=TINYINT},
+      </if>
+      <if test="exchangeStatus != null" >
+        exchange_status = #{exchangeStatus,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shareexchange.model.History" >
+    update history
+    set operate_id = #{operateId,jdbcType=BIGINT},
+      operate_role = #{operateRole,jdbcType=TINYINT},
+      goods_id = #{goodsId,jdbcType=VARCHAR},
+      goods_role = #{goodsRole,jdbcType=TINYINT},
+      share_status = #{shareStatus,jdbcType=TINYINT},
+      exchange_status = #{exchangeStatus,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

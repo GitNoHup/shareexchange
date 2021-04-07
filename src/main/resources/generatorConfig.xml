@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+<!--    <classPathEntry location="D:\softWere\Maven\MavenInstall\mysql\mysql-connector-java\8.0.16\mysql-connector-java-8.0.16.jar"/>-->
+    <!-- mysql -->
+    <classPathEntry location="D:\mavenSpace\mysql\mysql-connector-java\8.0.16\mysql-connector-java-8.0.16.jar"/>
+    <!-- oracle -->
+<!--    <classPathEntry location="C:\Users\Administrator\.m2\repository\com\oracle\ojdbc6\12.1.0.2.0\ojdbc6-12.1.0.2.0.jar"/>-->
+    <context id="default" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+        <!--        oracle-->
+<!--        <jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver"-->
+<!--                        connectionURL="jdbc:oracle:thin:@192.168.124.188:1521:orcl"-->
+<!--                        userId="stopt"-->
+<!--                        password="FVA6gDM1bw2WDJSz4hOw8741">-->
+<!--            <property name="useInformationSchema" value="true"/>-->
+<!--        </jdbcConnection>-->
+<!--        <jdbcConnection driverClass="com.mysql.jdbc.Driver"-->
+<!--                        connectionURL="jdbc:mysql://192.168.124.89:3306/stmdm?tinyInt1isBit=false"-->
+<!--                        userId="sto_dev"-->
+<!--                        password="89s0k50t5PCRou4dnKe91s5v">-->
+<!--            <property name="useInformationSchema" value="true"/>-->
+<!--        </jdbcConnection>-->
+
+         <!--mysql reverse-->
+<!--        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                            connectionURL="jdbc:mysql://10.249.7.78:3306/tdb58_hbg_esf_landlord_db"
+                        userId="anjuke_triger"
+                        password="anjuke_triger">
+            <property name="useInformationSchema" value="true"/>
+        </jdbcConnection>-->
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/share_exchange?serverTimezone=Asia/Shanghai"
+                        userId="root"
+                        password="123456">
+            <property name="nullCatalogMeansCurrent" value="true"/>
+        </jdbcConnection>
+        <javaModelGenerator targetPackage="com.shareexchange.model"
+                            targetProject="./src/main/java">
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <sqlMapGenerator targetPackage="mybatis"
+                         targetProject="./src/main/resources">
+        </sqlMapGenerator>
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="com.shareexchange.mapper"
+                             targetProject="./src/main/java">
+        </javaClientGenerator>
+
+        <table tableName="admin"
+               enableSelectByPrimaryKey="true"
+        enableUpdateByPrimaryKey="true"
+        enableDeleteByPrimaryKey="true">
+        </table>
+
+<!--        <table tableName="distribute_biz_config"
+               enableSelectByPrimaryKey="true"
+               enableUpdateByPrimaryKey="true"
+               enableDeleteByPrimaryKey="true">
+        </table>
+
+        <table tableName="distribute_range_no"
+               enableSelectByPrimaryKey="true"
+               enableUpdateByPrimaryKey="true"
+               enableDeleteByPrimaryKey="true">
+        </table>-->
+
+        <!--oracle 退回件表-->
+<!--        <javaModelGenerator targetPackage="cn.sto.reverse.postback.model.opt"-->
+<!--                            targetProject="./src/main/java">-->
+<!--            <property name="trimStrings" value="true"/>-->
+<!--        </javaModelGenerator>-->
+<!--        <sqlMapGenerator targetPackage="mybatis/opt"-->
+<!--                         targetProject="./src/main/resources">-->
+<!--        </sqlMapGenerator>-->
+<!--        <javaClientGenerator type="XMLMAPPER"-->
+<!--                             targetPackage="cn.sto.reverse.postback.dao.opt"-->
+<!--                             targetProject="./src/main/java">-->
+<!--        </javaClientGenerator>-->
+<!--        <table tableName="T_EDM_RETURNED_INTERCEPT" enableSelectByPrimaryKey="true"-->
+<!--               enableUpdateByPrimaryKey="true"-->
+<!--               enableDeleteByPrimaryKey="true">-->
+<!--            <generatedKey column="id" sqlStatement="Oracle" identity="true"/>-->
+<!--        </table>-->
+<!--        <table tableName="T_EDM_RETURNED_STATUS" enableSelectByPrimaryKey="true"-->
+<!--               enableUpdateByPrimaryKey="true"-->
+<!--               enableDeleteByPrimaryKey="true">-->
+<!--            <generatedKey column="id" sqlStatement="Oracle" identity="true"/>-->
+<!--        </table>-->
+<!--        <table tableName="t_edm_returned_print" enableSelectByPrimaryKey="true"-->
+<!--               enableUpdateByPrimaryKey="true"-->
+<!--               enableDeleteByPrimaryKey="true">-->
+<!--            <generatedKey column="id" sqlStatement="Oracle" identity="true"/>-->
+<!--        </table>-->
+        <!--        云上退回件               -->
+<!--        <table tableName="sto_postback" enableSelectByPrimaryKey="true"-->
+<!--               enableUpdateByPrimaryKey="true"-->
+<!--               enableDeleteByPrimaryKey="true">-->
+<!--            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+<!--        </table>-->
+<!--        <table tableName="postback_print" enableSelectByPrimaryKey="true"-->
+<!--               enableUpdateByPrimaryKey="true"-->
+<!--               enableDeleteByPrimaryKey="true">-->
+<!--            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+<!--        </table>-->
+       <!-- <table tableName="waybillno_intercept" enableSelectByPrimaryKey="true"
+               enableUpdateByPrimaryKey="true"
+               enableDeleteByPrimaryKey="true">
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>-->
+<!--        <table tableName="book" domainObjectName="Book"-->
+<!--               enableCountByExample="false" enableUpdateByExample="false"-->
+<!--               enableDeleteByExample="false" enableSelectByExample="false"-->
+<!--               selectByExampleQueryId="false">-->
+<!--        </table>-->
+
+    </context>
+</generatorConfiguration>

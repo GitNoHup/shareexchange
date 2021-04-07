@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shareexchange.mapper.ExchangeMapper" >
+  <resultMap id="BaseResultMap" type="com.shareexchange.model.Exchange" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="exchange_id" property="exchangeId" jdbcType="BIGINT" />
+    <result column="exchange_name" property="exchangeName" jdbcType="VARCHAR" />
+    <result column="exchange_image" property="exchangeImage" jdbcType="VARCHAR" />
+    <result column="exchange_title" property="exchangeTitle" jdbcType="VARCHAR" />
+    <result column="exchange_reason" property="exchangeReason" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="operate_id" property="operateId" jdbcType="BIGINT" />
+    <result column="operate_role" property="operateRole" jdbcType="TINYINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, user_id, exchange_id, exchange_name, exchange_image, exchange_title, exchange_reason, 
+    status, operate_id, operate_role, create_time, update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.shareexchange.model.ExchangeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from exchange
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from exchange
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from exchange
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.shareexchange.model.ExchangeExample" >
+    delete from exchange
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.shareexchange.model.Exchange" >
+    insert into exchange (id, user_id, exchange_id, 
+      exchange_name, exchange_image, exchange_title, 
+      exchange_reason, status, operate_id, 
+      operate_role, create_time, update_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{exchangeId,jdbcType=BIGINT}, 
+      #{exchangeName,jdbcType=VARCHAR}, #{exchangeImage,jdbcType=VARCHAR}, #{exchangeTitle,jdbcType=VARCHAR}, 
+      #{exchangeReason,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{operateId,jdbcType=BIGINT}, 
+      #{operateRole,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.shareexchange.model.Exchange" >
+    insert into exchange
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="exchangeId != null" >
+        exchange_id,
+      </if>
+      <if test="exchangeName != null" >
+        exchange_name,
+      </if>
+      <if test="exchangeImage != null" >
+        exchange_image,
+      </if>
+      <if test="exchangeTitle != null" >
+        exchange_title,
+      </if>
+      <if test="exchangeReason != null" >
+        exchange_reason,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="operateId != null" >
+        operate_id,
+      </if>
+      <if test="operateRole != null" >
+        operate_role,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="exchangeId != null" >
+        #{exchangeId,jdbcType=BIGINT},
+      </if>
+      <if test="exchangeName != null" >
+        #{exchangeName,jdbcType=VARCHAR},
+      </if>
+      <if test="exchangeImage != null" >
+        #{exchangeImage,jdbcType=VARCHAR},
+      </if>
+      <if test="exchangeTitle != null" >
+        #{exchangeTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="exchangeReason != null" >
+        #{exchangeReason,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="operateId != null" >
+        #{operateId,jdbcType=BIGINT},
+      </if>
+      <if test="operateRole != null" >
+        #{operateRole,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.shareexchange.model.ExchangeExample" resultType="java.lang.Integer" >
+    select count(*) from exchange
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update exchange
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.exchangeId != null" >
+        exchange_id = #{record.exchangeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.exchangeName != null" >
+        exchange_name = #{record.exchangeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.exchangeImage != null" >
+        exchange_image = #{record.exchangeImage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.exchangeTitle != null" >
+        exchange_title = #{record.exchangeTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.exchangeReason != null" >
+        exchange_reason = #{record.exchangeReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.operateId != null" >
+        operate_id = #{record.operateId,jdbcType=BIGINT},
+      </if>
+      <if test="record.operateRole != null" >
+        operate_role = #{record.operateRole,jdbcType=TINYINT},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update exchange
+    set id = #{record.id,jdbcType=BIGINT},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      exchange_id = #{record.exchangeId,jdbcType=BIGINT},
+      exchange_name = #{record.exchangeName,jdbcType=VARCHAR},
+      exchange_image = #{record.exchangeImage,jdbcType=VARCHAR},
+      exchange_title = #{record.exchangeTitle,jdbcType=VARCHAR},
+      exchange_reason = #{record.exchangeReason,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=TINYINT},
+      operate_id = #{record.operateId,jdbcType=BIGINT},
+      operate_role = #{record.operateRole,jdbcType=TINYINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shareexchange.model.Exchange" >
+    update exchange
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="exchangeId != null" >
+        exchange_id = #{exchangeId,jdbcType=BIGINT},
+      </if>
+      <if test="exchangeName != null" >
+        exchange_name = #{exchangeName,jdbcType=VARCHAR},
+      </if>
+      <if test="exchangeImage != null" >
+        exchange_image = #{exchangeImage,jdbcType=VARCHAR},
+      </if>
+      <if test="exchangeTitle != null" >
+        exchange_title = #{exchangeTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="exchangeReason != null" >
+        exchange_reason = #{exchangeReason,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="operateId != null" >
+        operate_id = #{operateId,jdbcType=BIGINT},
+      </if>
+      <if test="operateRole != null" >
+        operate_role = #{operateRole,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shareexchange.model.Exchange" >
+    update exchange
+    set user_id = #{userId,jdbcType=BIGINT},
+      exchange_id = #{exchangeId,jdbcType=BIGINT},
+      exchange_name = #{exchangeName,jdbcType=VARCHAR},
+      exchange_image = #{exchangeImage,jdbcType=VARCHAR},
+      exchange_title = #{exchangeTitle,jdbcType=VARCHAR},
+      exchange_reason = #{exchangeReason,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      operate_id = #{operateId,jdbcType=BIGINT},
+      operate_role = #{operateRole,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

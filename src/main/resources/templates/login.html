@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/lib/sto/css/sto.css"/>
+    <link rel="stylesheet" href="/style/style.css">
+
+</head>
+<body>
+<div class="container">
+    <div class="form row">
+        <div class="form-horizontal col-md-offset-3" id="login_form">
+            <h3 class="form-title">ADMIN_LOGIN</h3>
+                <div class="col-md-9">
+                    <table>
+                        <tr>
+                            <td colspan="2">
+                                <div class="form-group">
+                                    <i class="fa fa-user fa-lg"></i>
+                                    <input class="form-control required" type="text" placeholder="请输入手机号"
+                                           id="account"
+                                           name="account" autofocus="autofocus" maxlength="20"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <div class="form-group">
+                                    <i class="fa fa-lock fa-lg"></i>
+                                    <input class="form-control required" type="password" placeholder="请输入密码"
+                                           id="password"
+                                           name="password" maxlength="8"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center">
+                                <button type="submit" class="btn btn-success btnName" name="submit" data-type="logon">登录</button>
+                            </td>
+                            <td align="center">
+                                <button type="button" class="btn btn-success btnName" data-type="register">注册</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+        </div>
+    </div>
+</div>
+
+<div id="registerForm" style="display: none">
+    <div class="ibox border_n">
+        <div class="ibox_form">
+            <form class="layui-form-item layui-form-pane layui-form pl-20 pb-20 pt-10 pr-20" id="editForm">
+                <div class="layui-inline">
+                    <label class="layui-form-label">用户名</label>
+                    <div class="layui-input-inline pos-r">
+                        <input type="text" id="addUserName" name="addUserName" class="layui-input" maxlength="10"
+                               lay-verify="required">
+                        <i class="icon_ca_layui"></i>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">密码</label>
+                    <div class="layui-input-inline pos-r">
+                        <input type="text" id="addPassword" name="addPassword" class="layui-input" maxlength="6"
+                               lay-verify="required">
+                        <i class="icon_ca_layui"></i>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">确认密码</label>
+                    <div class="layui-input-inline pos-r">
+                        <input type="text" id="sure" name="sure" class="layui-input" maxlength="6"
+                               lay-verify="required">
+                        <i class="icon_ca_layui"></i>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="/lib/jquery/jquery.js"></script>
+<script type="text/javascript" src="/lib/bootstrapTable/bootstrap-table.js"></script>
+<script type="text/javascript" src="/lib/bootstrapTable/bootstrap.min.js"></script>
+<script type="text/javascript" src="/lib/bootstrapTable/bootstrap-table-export.js"></script>
+<script type="text/javascript" src="/lib/bootstrapTable/tableExport.js"></script>
+<script type="text/javascript" src="/lib/bootstrapTable/bootstrap-table-zh-CN.min.js"></script>
+<script type="text/javascript" src="/lib/layerui/layui.js"></script>
+<script type="text/javascript" src="/lib/sto/sto.js"></script>
+<script>
+
+
+
+    layui.use(['layer', 'form', 'laydate', 'test', 'autocomplete', 'http'], function () {
+        var form = layui.form(),
+            layer = layui.layer,
+            laydate = layui.laydate,
+            test = layui.test,
+            autocomplete = layui.autocomplete,
+            jstree = layui.jstree,
+            http = layui.http;
+
+        test.restVal();
+        test.selectMove();
+        test.formToggle({
+            ifTableResize: true
+        });
+
+        var registerAction = function (form, index){
+            if(!form.account){
+                layer.msg("请填写手机号",{icon:5});
+                return false;
+            }
+
+            if(!form.password){
+                layer.msg("请填写密码",{icon:5});
+                return false;
+            }
+
+            if(form.password != form.sure){
+                layer.msg("两次输入的密码不一致",{icon:5});
+                return false;
+            }
+
+            $.ajax({
+                url : "/authority/register",
+                contentType : "application/json",
+                method : "post",
+                data : JSON.stringify(form),
+                async : false,
+                success : function (response){
+                    if(response.errorCode == 20100){
+                        layer.msg('注册成功！', {icon: 1});
+                        layer.close(index);
+
+                    } else {
+                        layer.msg(response.errorMsg, {icon: 5});
+                    }
+                }
+            })
+
+        }
+
+        var loginAction = function (form){
+            if(!form.account){
+                layer.msg("请填写手机号",{icon:5});
+                return false;
+            }
+
+            if(!form.password){
+                layer.msg("请填写密码",{icon:5});
+                return false;
+            }
+
+            $.ajax({
+                url : "/adminController/adminLogin",
+                contentType : "application/json",
+                method : "post",
+                data : JSON.stringify(form),
+                async : false,
+                success : function (response){
+                    if(response.errorCode == 0){
+                        layer.msg('登录成功！', {icon: 1});
+
+                    } else {
+                        layer.msg('用户名密码不正确！', {icon: 5});
+                    }
+                }
+            })
+
+        }
+
+        var active = {
+            logon: function () {
+                var form = {};
+                form.account = $("#account").val();
+                form.password = $("#password").val();
+                form.role = "ADMIN";
+
+                loginAction(form);
+            }
+        }
+
+        $('body').on('click', '.btnName', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+    });
+
+</script>
+</head>
+</html>

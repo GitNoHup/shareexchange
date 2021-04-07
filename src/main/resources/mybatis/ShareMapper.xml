@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shareexchange.mapper.ShareMapper" >
+  <resultMap id="BaseResultMap" type="com.shareexchange.model.Share" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="share_id" property="shareId" jdbcType="BIGINT" />
+    <result column="share_name" property="shareName" jdbcType="VARCHAR" />
+    <result column="share_image" property="shareImage" jdbcType="VARCHAR" />
+    <result column="share_title" property="shareTitle" jdbcType="VARCHAR" />
+    <result column="share_reason" property="shareReason" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="operate_id" property="operateId" jdbcType="BIGINT" />
+    <result column="operate_role" property="operateRole" jdbcType="TINYINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, user_id, share_id, share_name, share_image, share_title, share_reason, status, 
+    operate_id, operate_role, create_time, update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.shareexchange.model.ShareExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from share
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from share
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from share
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.shareexchange.model.ShareExample" >
+    delete from share
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.shareexchange.model.Share" >
+    insert into share (id, user_id, share_id, 
+      share_name, share_image, share_title, 
+      share_reason, status, operate_id, 
+      operate_role, create_time, update_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{shareId,jdbcType=BIGINT}, 
+      #{shareName,jdbcType=VARCHAR}, #{shareImage,jdbcType=VARCHAR}, #{shareTitle,jdbcType=VARCHAR}, 
+      #{shareReason,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{operateId,jdbcType=BIGINT}, 
+      #{operateRole,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.shareexchange.model.Share" >
+    insert into share
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="shareId != null" >
+        share_id,
+      </if>
+      <if test="shareName != null" >
+        share_name,
+      </if>
+      <if test="shareImage != null" >
+        share_image,
+      </if>
+      <if test="shareTitle != null" >
+        share_title,
+      </if>
+      <if test="shareReason != null" >
+        share_reason,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="operateId != null" >
+        operate_id,
+      </if>
+      <if test="operateRole != null" >
+        operate_role,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="shareId != null" >
+        #{shareId,jdbcType=BIGINT},
+      </if>
+      <if test="shareName != null" >
+        #{shareName,jdbcType=VARCHAR},
+      </if>
+      <if test="shareImage != null" >
+        #{shareImage,jdbcType=VARCHAR},
+      </if>
+      <if test="shareTitle != null" >
+        #{shareTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="shareReason != null" >
+        #{shareReason,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="operateId != null" >
+        #{operateId,jdbcType=BIGINT},
+      </if>
+      <if test="operateRole != null" >
+        #{operateRole,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.shareexchange.model.ShareExample" resultType="java.lang.Integer" >
+    select count(*) from share
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update share
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.shareId != null" >
+        share_id = #{record.shareId,jdbcType=BIGINT},
+      </if>
+      <if test="record.shareName != null" >
+        share_name = #{record.shareName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shareImage != null" >
+        share_image = #{record.shareImage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shareTitle != null" >
+        share_title = #{record.shareTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shareReason != null" >
+        share_reason = #{record.shareReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.operateId != null" >
+        operate_id = #{record.operateId,jdbcType=BIGINT},
+      </if>
+      <if test="record.operateRole != null" >
+        operate_role = #{record.operateRole,jdbcType=TINYINT},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update share
+    set id = #{record.id,jdbcType=BIGINT},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      share_id = #{record.shareId,jdbcType=BIGINT},
+      share_name = #{record.shareName,jdbcType=VARCHAR},
+      share_image = #{record.shareImage,jdbcType=VARCHAR},
+      share_title = #{record.shareTitle,jdbcType=VARCHAR},
+      share_reason = #{record.shareReason,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=TINYINT},
+      operate_id = #{record.operateId,jdbcType=BIGINT},
+      operate_role = #{record.operateRole,jdbcType=TINYINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shareexchange.model.Share" >
+    update share
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="shareId != null" >
+        share_id = #{shareId,jdbcType=BIGINT},
+      </if>
+      <if test="shareName != null" >
+        share_name = #{shareName,jdbcType=VARCHAR},
+      </if>
+      <if test="shareImage != null" >
+        share_image = #{shareImage,jdbcType=VARCHAR},
+      </if>
+      <if test="shareTitle != null" >
+        share_title = #{shareTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="shareReason != null" >
+        share_reason = #{shareReason,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="operateId != null" >
+        operate_id = #{operateId,jdbcType=BIGINT},
+      </if>
+      <if test="operateRole != null" >
+        operate_role = #{operateRole,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shareexchange.model.Share" >
+    update share
+    set user_id = #{userId,jdbcType=BIGINT},
+      share_id = #{shareId,jdbcType=BIGINT},
+      share_name = #{shareName,jdbcType=VARCHAR},
+      share_image = #{shareImage,jdbcType=VARCHAR},
+      share_title = #{shareTitle,jdbcType=VARCHAR},
+      share_reason = #{shareReason,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      operate_id = #{operateId,jdbcType=BIGINT},
+      operate_role = #{operateRole,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
