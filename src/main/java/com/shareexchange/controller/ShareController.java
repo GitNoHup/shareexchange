@@ -37,18 +37,26 @@ public class ShareController {
      * 新增分享
      */
     @RequestMapping("/addShare")
-    public ResultEntity<List<Share>> addShare(@RequestBody Share param){
-        List<Share> result = shareService.addShare(param);
-        return ResultEntity.getInstance(0, "返回结果", result);
+    public ResultEntity<Boolean> addShare(@RequestBody Share param){
+        Boolean result = shareService.addShare(param);
+        if(result){
+            return ResultEntity.getInstance(0, "已成功添加分享物品", result);
+        }  else {
+            return ResultEntity.getInstance(10000, "添加分享物品失败", result);
+        }
     }
 
     /**
      * 下架分享
      */
     @RequestMapping("/outShare")
-    public ResultEntity<List<Share>> outShare(@RequestBody ShareSearchParam param){
-        List<Share> result = shareService.outShare(param);
-        return ResultEntity.getInstance(0, "返回结果", result);
+    public ResultEntity<Boolean> outShare(@RequestBody Long shareId){
+        Boolean result = shareService.outShare(shareId);
+        if(result){
+            return ResultEntity.getInstance(0, "已下架分享的物品", result);
+        }  else {
+            return ResultEntity.getInstance(10000, "下架分享失败", result);
+        }
     }
 
     /**

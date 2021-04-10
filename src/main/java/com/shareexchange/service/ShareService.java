@@ -62,4 +62,22 @@ public class ShareService {
         }
         return true;
     }
+
+    /**
+     * 下架分享
+     * @param shareId
+     * @return
+     */
+    public Boolean outShare(Long shareId){
+        Share share = new Share();
+        share.setStatus(ShareEnum.OUT_STOCK.getCode());
+        ShareExample example = new ShareExample();
+        example.createCriteria().andShareIdEqualTo(shareId);
+        try {
+            shareMapper.updateByExampleSelective(share, example);
+        } catch (Exception e){
+            return false;
+        }
+        return true;
+    }
 }
